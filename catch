@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+
+class A
+{
+public:
+
+	A(){}
+
+
+	~A()
+	{
+		try
+		{
+		   throw runtime_error("exception");
+		}
+
+
+		catch(const string& a)
+		{
+			cout << "catch  " << a << endl;
+		}
+
+		catch (...)
+		{
+			cout << "unknown" << endl;
+		}
+	}
+};
+
+
+int main()
+{
+	A obj;
+
+}
