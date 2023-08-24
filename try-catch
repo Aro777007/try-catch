@@ -1,0 +1,280 @@
+#include <iostream>
+using namespace std;
+#include <string>
+
+int a;
+int b;
+
+string blackKing = "BK34";
+string whiteKing = "WK45";
+string blackKnight = "BK56";
+string blackBishop = "BB33";
+
+
+class game
+{
+    virtual void start() {}
+    virtual void end() {}
+};
+
+
+
+class chessGame : public game
+{
+    
+  void start() {}
+ 
+};
+
+class matrix
+{
+public:
+  
+
+    string** arr = nullptr;
+    int size = 8;
+
+    matrix()
+    {
+        arr = new string * [size];
+
+        for (int i = 0; i < size; ++i)
+        {
+            arr[i] = new string[size];
+            for (int j = 0; j < size; ++j)
+            {
+                arr[i][j] = "~";
+            }
+
+        }
+    }
+
+    matrix(const matrix& obj)
+    {
+        this->size = obj.size;
+        this->arr = new string * [size];
+
+        for (int i = 0; i < size; ++i)
+        {
+            this->arr[i] = new string[size];
+            for (int j = 0; j < size; ++j)
+            {
+                this->arr[i][j] = obj.arr[i][j];
+            }
+        }
+
+    }
+
+    void add_cordinat()
+    {
+        int i;
+        int j;
+        cin >> i;
+        cin >> j;
+
+        if (i <= 7 && i >= 0  && j<=7 && j>=0 )
+            cout << "you give correct cordinats" << endl;
+        else
+            cout << "you give incorrect elements" << endl;
+
+    }
+
+
+};
+
+class figure
+{
+public:
+
+    figure() {}
+
+    string colour;
+    string type;
+};
+/*
+class black_king :public matrix
+{
+public:
+
+
+    black_king()
+    {
+        int a = 7;
+        int b = 0;
+        int di[] = { -1, -1, -1, 0, 0, 1, 1, 1 }; // i-direction for king's moves
+        int dj[] = { -1, 0, 1, -1, 1, -1, 0, 1 }; // j-direction for king's moves
+
+        // Clear the previous position of the king
+        arr[b][a] = " ";
+
+        // Move the king to new positions
+        for (int k = 0; k < 8; k++)
+        {
+            int new_i = a + di[k];
+            int new_j = b + dj[k];
+
+            if (new_i >= 0 && new_i < size && new_j >= 0 && new_j < size)
+            {
+                arr[new_j][new_i] = "0";
+            }
+        }
+
+
+    }
+
+};
+class white_king :public matrix
+{
+public:
+
+    white_king()
+    {
+
+        int a = 7;
+        int b = 7;
+        int di[] = { -1, -1, -1, 0, 0, 1, 1, 1 }; // i-direction for king's moves
+        int dj[] = { -1, 0, 1, -1, 1, -1, 0, 1 }; // j-direction for king's moves
+
+        // Clear the previous position of the king
+        arr[b][a] = " ";
+
+        // Move the king to new positions
+        for (int k = 0; k < 8; k++)
+        {
+            int new_i = a + di[k];
+            int new_j = b + dj[k];
+
+            if (new_i >= 0 && new_i < size && new_j >= 0 && new_j < size)
+            {
+                arr[new_j][new_i] = "0";
+            }
+        }
+
+
+    }
+
+
+
+};
+class white_knight : public figure, public matrix
+{
+public:
+
+
+    white_knight()
+    {
+
+        int a = 5;
+        int b = 3;
+
+        int di[] = { -1, -2, -2, -1, 1, 2, 2, 1 }; // i-direction for knight's L-moves
+        int dj[] = { -2, -1, 1, 2, 2, 1, -1, -2 }; // j-direction for knight's L-moves
+
+        // Clear the previous position of the knight
+        arr[b][a] = " ";
+
+        // Move the knight to new positions
+        for (int k = 0; k < 8; k++)
+        {
+            int new_i = a + di[k];
+            int new_j = b + dj[k];
+
+            if (new_i >= 0 && new_i < size && new_j >= 0 && new_j < size)
+            {
+                arr[new_j][new_i] = "0";
+            }
+        }
+
+
+    }
+};
+class white_bishop : public matrix, public figure {
+public:
+
+
+
+    white_bishop()
+    {
+
+        colour = "black";
+        type = "black boat";
+
+
+        int a = 5;
+        int b = 1;
+        int di[] = { -1, -1, 1, 1 }; // i-direction for diagonals
+        int dj[] = { -1, 1, -1, 1 }; // j-direction for diagonals
+
+        // Clear the previous position of the bishop
+        arr[b][a] = " ";
+
+        // Move the bishop diagonally
+        for (int k = 0; k < 4; k++)
+        {
+            int new_i = a + di[k];
+            int new_j = b + dj[k];
+
+            while (new_i >= 0 && new_i < size && new_j >= 0 && new_j < size)
+            {
+                arr[new_j][new_i] = "0";
+                new_i += di[k];
+                new_j += dj[k];
+            }
+        }
+
+
+    }
+
+private:
+    //  std::string arr[size][size];
+};
+class white_quenn : public matrix, public figure {
+public:
+
+    white_quenn()
+    {
+        int a = 3;
+        int b = 0;
+
+        int dj[] = { -1, -1, -1, 0, 0, 1, 1, 1 }; //j
+        int di[] = { -1, 0, 1, -1, 1, -1, 0, 1 }; //i
+
+        // Clear the previous position of the queen
+        arr[b][a] = " ";
+
+        // Move the queen to new positions
+        for (int i = 0; i < 8; i++)
+        {
+            int new_i = a + di[i];
+            int new_j = b + dj[i];
+
+            while (new_i >= 0 && new_i < size && new_j >= 0 && new_j < size)
+            {
+                arr[new_j][new_i] = "0";
+                new_i += di[i];
+                new_j += dj[i];
+            }
+        }
+
+
+    }
+};
+*/
+
+int main()
+{
+    game g;
+    matrix m;
+    try {
+        m.add_cordinat();
+    }
+    catch (const std::string& e) {
+        std::cerr << "An exception occurred: "  << std::endl;
+    }
+  /*  white_king obj;
+    black_king obj1;
+    white_knight obj2;
+    white_bishop obj3;
+    white_quenn obj4;
+    */
+}
